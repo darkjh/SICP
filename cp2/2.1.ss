@@ -1,0 +1,21 @@
+;; Ex. 2.1
+
+(define (make-rat n d)
+  (let ((g (gcd n d))
+	(nn (/ n g))
+	(dd (/ d g)))
+    (cond ((and (< nn 0) (< dd 0)) (cons (- 0 nn) (- 0 dd)))
+        ((and (< dd 0) (> nn 0)) (cons (- 0 nn) (- 0 dd)))
+	(else (cons nn dd)))))
+
+(define (numer x) (car x))
+(define (denom x) (cdr x))
+(define (print-rat x)
+  (display (numer x))
+  (display "/")
+  (display (denom x))
+  (newline))
+(define (add-rat x y)
+  (make-rat (+ (* (numer x) (denom y))
+               (* (numer y) (denom x)))
+            (* (denom x) (denom y))))

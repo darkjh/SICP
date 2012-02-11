@@ -1,0 +1,12 @@
+;; Ex. 1.31
+(define (product term a next b)
+  (if (> a b)
+      1
+      (* (term a)
+	 (product term (next a) next b))))
+
+
+;; Using high-order function product for factoriel
+(define (fac b)
+  (define (inc a) (+ a 1))
+  (product (lambda (x) (x)) 1 inc b))

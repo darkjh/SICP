@@ -1,0 +1,36 @@
+
+(define (timed-prime-test n)
+  (newline) 
+  (display n) 
+  (start-prime-test n (current-milliseconds)))
+(define (start-prime-test n start-time)
+  (if (fast-prime? n 1000)
+      (report-prime (- (current-milliseconds) start-time)) 'not-prime))
+(define (report-prime elapsed-time)
+  (display " *** ") 
+  (display elapsed-time))
+
+(define (square x) (* x x))
+
+(define (fast-prime? n times)
+  (cond ((= times 0) true)
+        ((fermat-test n) (fast-prime? n (- times 1))) 
+        (else false)))
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (square (expmod base (/ exp 2) m))m))
+        (else
+         (remainder (* base (expmod base (- exp 1) m))m))))
+(define (fermat-test n)
+  (define (try-it a)
+    (= (expmod a n n) a))
+  (try-it (+ 1 (random (remainder (- n 1) 4294967087)))))
+
+(define (search-for-primes start count)
+  (if (not (= count 0))
+      (cond ((eq? (timed-prime-test start) 'not-prime)
+             (search-for-primes (+ start 1) count))
+            (else
+             (search-for-primes (+ start 1) (- count 1))))
+      (display "done")))

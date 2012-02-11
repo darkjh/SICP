@@ -1,0 +1,57 @@
+;Language require: Pretty Big in DrScheme
+;(require srfi/19)
+
+;Calculate time
+;can be modified with the methods below
+(require trace)
+(define (timed-prime-test n)
+  (newline)
+  (display n)
+  (start-prime-test n (current-milliseconds)))
+(define (start-prime-test n start-time)
+  (if (fast-prime? n 1000)
+      (report-prime (- (current-milliseconds) start-time))
+      'not-prime))
+(define (report-prime elapsed-time)
+  (display "  ***  ")
+  (display elapsed-time))
+;Search procedure
+(define (search-for-prime start count)
+  (if (not (=  count 0))
+      (cond ((eq? (timed-prime-test start) 'not-prime) (search-for-prime (+ 1 start) count))
+            (else (search-for-prime (+ 1 start) (- count 1))))
+      (display "   done")))
+;find smallest divisor: normal method
+(define (smallest-divisor n)
+  (find-divisor n 2))
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (find-divisor n (next test-divisor)))))
+;find smallest divisor: fermet test
+(define (fermat-test n)
+  (define (try a)
+    (= (expmod a n n) a))
+  (try (+ 1 (random (- n 1)))))
+(define (fast-prime? n times)
+  (cond ((= 0 times) true)
+        ((fermat-test n) (fast-prime? n (- times 1)))
+        (else false)))
+
+;procedures needed
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp) (remainder (square (expmod base (/ exp 2) m))
+                                m))
+        (else (remainder (* base (expmod base (- exp 1) m))
+                        m))))
+(define (next n)
+  (if (= n 2)
+      3
+      (+ n 2)))
+(define (divides? a b)
+  (= (remainder b a) 0))
+(define (prime? n)
+  (= n (smallest-divisor n)))
+(define (square x)
+  (* x x))

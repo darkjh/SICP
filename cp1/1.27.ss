@@ -1,0 +1,16 @@
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp) (remainder (square (expmod base (/ exp 2) m))
+                                m))
+        (else (remainder (* base (expmod base (- exp 1) m))
+                        m))))
+(define (check n base)
+  (cond ((= n 0) true)
+        ((= (expmod n base base) n) (check (- n 1) base))
+        (else false)))
+(define (carm? n)
+  (check (- n 1) n))
+
+
+(define (square x)
+  (* x x))
