@@ -40,8 +40,8 @@
   (make-frame
     test-dc
     (make-vect 0 0)
-    (make-vect 300 0)
-    (make-vect 0 300)))
+    (make-vect 700 0)
+    (make-vect 0 700)))
 
 ;; 调用frame的show方法，显示窗口
 (send test-frame show #t)
