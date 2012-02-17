@@ -27,7 +27,7 @@
 ;; 取得画图区域里的drawable context，也就是画图函数直接操作的对象
 (define test-dc (send test-canvas get-dc))
 
-;; 定义一个画笔
+
 (define red-pen (new pen% [color "red"] [width 1]))
 
 ;; 试着画一下
@@ -40,8 +40,8 @@
   (make-frame
     test-dc
     (make-vect 0 0)
-    (make-vect 300 0)
-    (make-vect 0 300)))
+    (make-vect 700 0)
+    (make-vect 0 700)))
 
 ;; 调用frame的show方法，显示窗口
 (send test-frame show #t)
