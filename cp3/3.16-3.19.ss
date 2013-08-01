@@ -9,14 +9,14 @@
 ;; returns 3
 (count-pairs (list 1 2 3))
 ;; returns 4
-(define a (list 1))
-(define b (cons 1 (cons a a)))
-(count-pairs b)
+(define one (list 1))
+(define four (cons 1 (cons a a)))
+(count-pairs four)
 ;; returns 7
-(define x (list 1))
-(define y (cons x x))
-(define z (cons y y))
-(count-pairs z)
+(define one (list 1))
+(define three (cons one one))
+(define seven (cons three three))
+(count-pairs seven)
 
 ;; 3.17
 (define (count-pairs x)
